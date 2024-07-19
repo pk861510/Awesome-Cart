@@ -1,0 +1,54 @@
+{% extends "shop/base.html"%}
+
+{% block css %}
+.bg-body{
+background-color: rgb(200, 200, 220);
+}
+{% endblock %}
+
+{% block title%}Exercise 3 {% endblock %}
+
+{% block content%}
+<h1>Chalange accepted ex3 <br>To display the data from our models database which i created for our shop app</h1>
+<!-- <ul style="list-style-type: none; padding: 0; margin: 0;"> -->
+<!-- Header Row -->
+<li style="display: flex; align-items: center; border-bottom: 1px solid #231b1b; padding: 10px 0;">
+    <ol style="flex: 2; margin: 0; padding: 0 10px;">
+        <p>Product_name</p>
+    </ol>
+    <ol style="flex: 1; margin: 0; padding: 0 10px;">
+        <p>Category</p>
+    </ol>
+    <ol style="flex: 3; margin: 0; padding: 0 10px;">
+        <p>Description</p>
+    </ol>
+    <ol style="flex: 1; margin: 0; padding: 0 10px;">
+        <p>Price</p>
+    </ol>
+    <ol style="flex: 1; margin: 0; padding: 0 10px;">
+        <p>Publish_date</p>
+    </ol>
+</li>
+<!-- Data Rows -->
+{% for item in data %}
+<li style="display: flex; align-items: center; border-bottom: 1px solid #231b1b; padding: 10px 0;">
+    <ol style="flex: 2; margin: 0; padding: 0 10px;">
+        <p>{{ item.product_name }}</p>
+    </ol>
+    <ol style="flex: 1; margin: 0; padding: 0 10px;">
+        <p>{{ item.category }}</p>
+    </ol>
+    <ol style="flex: 3; margin: 0; padding: 0 10px;">
+        <p>{{ item.desc }}</p>
+    </ol>
+    <ol style="flex: 1; margin: 0; padding: 0 10px;">
+        <p>{{ item.price }}</p>
+    </ol>
+    <ol style="flex: 1; margin: 0; padding: 0 10px;">
+        <p>{{ item.pub_date }}</p>
+    </ol>
+</li>
+
+{% endfor %}
+<!-- <p>{{ item.product_name }}</p> -->
+{% endblock %}

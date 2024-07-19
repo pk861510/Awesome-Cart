@@ -1,0 +1,151 @@
+{% extends "shop/base.html" %}
+
+{% block css %}
+body {
+background-color: aqua;
+}
+
+.col-md-3 {
+display: inline-block;
+margin-left: -4px;
+}
+
+.col-md-3 img {
+width: 227;
+height: 210px;
+}
+
+body .carousel-indicators li {
+background-color: rgb(200, 200, 220);
+}
+body .carousel-indicators {
+bottom: -30px; /* Adjust this value as needed to position below the carousel */
+ml:-50px;
+}
+
+
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon {
+background-color: rgb(236, 22, 47);
+}
+.carousel-control-prev{
+margin-left:-130px;
+}
+
+.carousel-control-next{
+margin-right:-130px;
+}
+
+body .carousel-indicators {
+bottom: 0; /* Corrected from 'O' to '0' */
+}
+
+.carousel-indicators .active {
+background-color: red;
+}
+
+.card-img-top {
+padding: 9px;
+<!-- border: 2px solid black; -->
+}
+
+body .no-padding {
+padding-left: 0;
+padding-right: 0;
+}
+{% endblock %}
+
+{% block title %} Awesome Cart! {% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Slideshow starts here -->
+  {% for product, range, nSlide in allProds %}
+  <h3 class="my-4">Flash Sale On {{ product.0.category }} -Recommended items</h3>
+
+  <div class="row">
+
+  <div id="demo{{ forloop.counter }}" class=" col carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+      <li data-target="#demo{{ forloop.counter }}" data-slide-to="0" class="active"></li>
+      {% for i in range %}
+      <li data-target="#demo{{ forloop.counter }}" data-slide-to="{{ i }}"></li>
+      {% endfor %}
+    </ul>
+
+    <div class="container carousel-inner no-padding">
+      <div class="carousel-item active">
+        {% for i in product %}
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card align-item-centre" style="width: 18rem;">
+            <img class="card-img-top" src="/media/{{ i.image }}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ i.product_name }}</h5>
+              <p class="card-text">{{ i.desc }}</p>
+              <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+              <a href="/shop/prodview/{{i.id}}" > <button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button></a>
+            </div>
+            
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+      </div class>
+      <div class="carousel-item">
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <!-- Left and right control -->
+    <a class="carousel-control-prev" href="#demo{{ forloop.counter }}" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+
+    <a class="carousel-control-next" href="#demo{{ forloop.counter }}" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+</div>
+  {% endfor %}
+
+  <!-- <h1>Hello, world! of shop app</h1>
+  {% load static %}
+  <a style="margin-left: 50px;" href="{% static 'shop/se.jpg' %}">Click me</a> <br> -->
+  <a style="margin-left: 50px;" href="/">Blog page</a>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+  console.log('working')
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  }
+  else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+  }
+
+  $('.cart').click(function () {
+
+    console.log('clicked')
+    var idstr = this.id.toString();
+    console.log(idstr)
+    if (cart[idstr] != undefined) {
+      cart[idstr] = cart[idstr] + 1;
+    }
+    else {
+      cart[idstr] = 1;
+    }
+    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  })
+{% comment %}   $('#popcart').popover(); this will show automatically the popover fcontent without click  {% endcomment %}
+  $('#popcart').popover();   
+  document.getElementById("popcart").setAttribute('data-content','<h5>Cart for your iten in myshopping cart</h5>')
+  
+</script>
+{% endblock %}
