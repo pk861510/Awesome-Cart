@@ -60,8 +60,7 @@ def productview(request,myid):
     return render(request,"shop/productview.html",{"product":product1})
 
 def checkout(request):
-    return HttpResponse("Checkout page")
-
+    return render(request,'shop/checkout.html')
 def cart(request):
     return HttpResponse("this is our cart page")
 
